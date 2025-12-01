@@ -35,24 +35,41 @@ interface LeagueEntryDto {
 }
 
 export const fetchAccount = async (gameName: string, tagLine: string): Promise<AccountDto> => {
-    const response = await fetch(`/asia/riot/account/v1/accounts/by-riot-id/${gameName}/${tagLine}?api_key=${API_KEY}`);
+    const response = await fetch(`/asia/riot/account/v1/accounts/by-riot-id/${gameName}/${tagLine}`, {
+        headers: {
+            'X-Riot-Token': API_KEY
+        }
+    });
     if (!response.ok) {
+        console.error(`Fetch Account Error: ${response.status} ${response.statusText}`);
+        const text = await response.text();
+        console.error(`Response Body: ${text}`);
         throw new Error('Failed to fetch account');
     }
     return response.json();
 };
 
 export const fetchSummoner = async (puuid: string): Promise<SummonerDto> => {
-    const response = await fetch(`/api/lol/summoner/v4/summoners/by-puuid/${puuid}?api_key=${API_KEY}`);
+    const response = await fetch(`/api/lol/summoner/v4/summoners/by-puuid/${puuid}`, {
+        headers: {
+            'X-Riot-Token': API_KEY
+        }
+    });
     if (!response.ok) {
+        console.error(`Fetch Summoner Error: ${response.status} ${response.statusText}`);
         throw new Error('Failed to fetch summoner');
     }
     return response.json();
 };
 
 export const fetchLeagueEntries = async (summonerId: string): Promise<LeagueEntryDto[]> => {
-    const response = await fetch(`/api/lol/league/v4/entries/by-summoner/${summonerId}?api_key=${API_KEY}`);
+    const response = await fetch(`/api/lol/league/v4/entries/by-summoner/${summonerId}`, {
+        headers: {
+            'X-Riot-Token': API_KEY
+        }
+    });
     if (!response.ok) {
+        console.error(`Fetch League Error: ${response.status} ${response.statusText}`);
         throw new Error('Failed to fetch league entries');
     }
     return response.json();
