@@ -19,87 +19,124 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
     };
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center px-4 md:px-0 relative overflow-hidden bg-black">
-            {/* Background Overlay */}
-            <div className="absolute inset-0 bg-black/60 z-0" />
+        <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden bg-[#010a13]">
+            <style>{`
+                input:-webkit-autofill,
+                input:-webkit-autofill:hover, 
+                input:-webkit-autofill:focus, 
+                input:-webkit-autofill:active{
+                    -webkit-box-shadow: 0 0 0 30px #010a13 inset !important;
+                    -webkit-text-fill-color: #cdbe91 !important;
+                    transition: background-color 5000s ease-in-out 0s;
+                }
+            `}</style>
 
-            <div className="w-full max-w-[400px] space-y-0 bg-[#1e2328] p-0 rounded-sm border-2 border-[#3c3c41] relative z-10 shadow-2xl mb-12">
-                {/* Header Section */}
-                <div className="text-center pt-10 pb-6 relative overflow-hidden">
-                    {/* Golden Glow behind logo */}
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-[#c8aa6e]/20 blur-3xl rounded-full pointer-events-none" />
+            {/* Background Image/Overlay */}
+            <div className="absolute inset-0 z-0">
+                <div className="absolute inset-0 bg-[url('https://assets.contentstack.io/v3/assets/blt731acb42bb3d1659/blt2a8d492ef6265c16/5db05fa86af6e9662b699806/RiotX_ChampionList_stage_bottom.png')] bg-cover bg-center opacity-40" />
+                <div className="absolute inset-0 bg-gradient-to-b from-[#010a13]/80 via-[#010a13]/50 to-[#010a13]" />
+            </div>
 
-                    <h1 className="relative z-10 flex flex-col items-center">
-                        <span className="block text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-[#c8aa6e] via-[#f0e6d2] to-[#c8aa6e] tracking-tighter uppercase drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]" style={{ fontFamily: 'Beaufort, serif' }}>
+            <div className="w-full max-w-[420px] relative z-10 flex flex-col items-center">
+                {/* Logo Section */}
+                <div className="mb-12 text-center relative group cursor-default">
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-[#c8aa6e]/10 blur-[60px] rounded-full pointer-events-none group-hover:bg-[#c8aa6e]/20 transition-all duration-700" />
+
+                    <h1 className="relative flex flex-col items-center">
+                        <span className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-[#f0e6d2] via-[#c8aa6e] to-[#8c7335] tracking-tighter uppercase drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)]" style={{ fontFamily: 'Beaufort, serif' }}>
                             롤다방
                         </span>
-                        <span className="block text-2xl font-bold text-[#f0e6d2] tracking-[0.1em] uppercase mt-1 drop-shadow-md" style={{ fontFamily: 'Beaufort, serif' }}>
+                        <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-[#c8aa6e] to-transparent my-2 opacity-70" />
+                        <span className="text-xl font-bold text-[#a09b8c] tracking-[0.3em] uppercase drop-shadow-md" style={{ fontFamily: 'Beaufort, serif' }}>
                             내전 악귀 수용소
                         </span>
                     </h1>
                 </div>
 
-                {/* Login Form Section */}
-                <div className="bg-[#1e2328] p-8 pt-2">
-                    <h2 className="text-[#f0e6d2] text-sm font-bold mb-6 border-l-4 border-[#c8aa6e] pl-3 flex items-center h-4">
-                        계정 로그인
-                    </h2>
+                {/* Login Container */}
+                <div className="w-full bg-[#010a13]/90 backdrop-blur-sm p-[2px] rounded-sm border border-[#3c3c41] shadow-2xl relative overflow-hidden">
+                    {/* Border Gradients */}
+                    <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#c8aa6e] to-transparent opacity-50" />
+                    <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#c8aa6e] to-transparent opacity-50" />
 
-                    <form onSubmit={handleSubmit} className="space-y-5">
-                        <div className="space-y-4">
-                            <div>
-                                <label className="block text-[11px] font-bold text-[#a09b8c] mb-1.5">계정 이름</label>
-                                <input
-                                    type="text"
-                                    value={username}
-                                    onChange={(e) => setUsername(e.target.value)}
-                                    className="w-full bg-[#f0f0f0] text-gray-900 px-3 py-2.5 border-2 border-gray-300 focus:border-[#c8aa6e] outline-none transition-colors font-bold text-sm placeholder-gray-400"
-                                    placeholder=""
-                                />
+                    <div className="bg-[#091428] p-8 relative">
+                        {/* Corner Accents */}
+                        <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#c8aa6e]" />
+                        <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#c8aa6e]" />
+                        <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[#c8aa6e]" />
+                        <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#c8aa6e]" />
+
+                        <h2 className="text-[#f0e6d2] text-lg font-bold mb-8 text-center tracking-widest uppercase">
+                            로그인
+                        </h2>
+
+                        <form onSubmit={handleSubmit} className="space-y-6">
+                            <div className="space-y-5">
+                                <div className="group">
+                                    <label className="block text-[11px] font-bold text-[#a09b8c] mb-2 uppercase tracking-wider group-focus-within:text-[#c8aa6e] transition-colors">아이디</label>
+                                    <div className="relative">
+                                        <input
+                                            type="text"
+                                            value={username}
+                                            onChange={(e) => setUsername(e.target.value)}
+                                            className="w-full bg-[#010a13] text-[#f0e6d2] px-4 py-3 border border-[#3c3c41] focus:border-[#c8aa6e] outline-none transition-all font-medium text-sm placeholder-[#5c5b57] shadow-inner"
+                                            placeholder="아이디를 입력하세요"
+                                        />
+                                    </div>
+                                </div>
+                                <div className="group">
+                                    <label className="block text-[11px] font-bold text-[#a09b8c] mb-2 uppercase tracking-wider group-focus-within:text-[#c8aa6e] transition-colors">비밀번호</label>
+                                    <div className="relative">
+                                        <input
+                                            type="password"
+                                            value={password}
+                                            onChange={(e) => setPassword(e.target.value)}
+                                            className="w-full bg-[#010a13] text-[#f0e6d2] px-4 py-3 border border-[#3c3c41] focus:border-[#c8aa6e] outline-none transition-all font-medium text-sm placeholder-[#5c5b57] shadow-inner"
+                                            placeholder="비밀번호를 입력하세요"
+                                        />
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <label className="block text-[11px] font-bold text-[#a09b8c] mb-1.5">비밀번호</label>
-                                <input
-                                    type="password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full bg-[#f0f0f0] text-gray-900 px-3 py-2.5 border-2 border-gray-300 focus:border-[#c8aa6e] outline-none transition-colors font-bold text-sm"
-                                    placeholder=""
-                                />
+
+                            <div className="pt-4 space-y-3">
+                                <button
+                                    type="submit"
+                                    className="w-full bg-gradient-to-b from-[#1e2328] to-[#1e2328] hover:from-[#1e2328] hover:to-[#2d3238] text-[#cdbe91] font-bold py-3.5 px-4 rounded-[2px] shadow-lg transition-all uppercase text-xs tracking-[0.1em] border border-[#c8aa6e] hover:brightness-125 active:scale-[0.98] relative overflow-hidden group"
+                                >
+                                    <span className="relative z-10">로그인</span>
+                                    <div className="absolute inset-0 bg-[#c8aa6e]/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                                </button>
+
+                                <button
+                                    type="button"
+                                    onClick={onLogin}
+                                    className="w-full bg-transparent text-[#a09b8c] hover:text-[#f0e6d2] font-medium py-2 px-4 text-[11px] transition-colors flex items-center justify-center gap-2 group"
+                                >
+                                    <span className="w-1 h-1 bg-[#a09b8c] rounded-full group-hover:bg-[#c8aa6e]" />
+                                    샘플 계정으로 빠르게 시작하기
+                                    <span className="w-1 h-1 bg-[#a09b8c] rounded-full group-hover:bg-[#c8aa6e]" />
+                                </button>
+                            </div>
+                        </form>
+
+                        <div className="mt-8 pt-6 border-t border-[#1e2328] flex justify-between text-[11px] text-[#5c5b57]">
+                            <a href="#" className="hover:text-[#c8aa6e] transition-colors">회원가입</a>
+                            <div className="flex gap-4">
+                                <a href="#" className="hover:text-[#c8aa6e] transition-colors">아이디 찾기</a>
+                                <a href="#" className="hover:text-[#c8aa6e] transition-colors">비밀번호 찾기</a>
                             </div>
                         </div>
-
-                        <div className="flex gap-3 pt-2">
-                            <button
-                                type="button"
-                                onClick={onLogin}
-                                className="flex-1 bg-gradient-to-b from-[#ffae00] to-[#cd6e00] hover:from-[#ffbe33] hover:to-[#e67e00] text-[#1a1a1a] font-bold py-2.5 px-4 rounded-[2px] shadow-lg transition-all uppercase text-[11px] tracking-wide border border-[#c8aa6e] hover:brightness-110 active:translate-y-[1px]"
-                            >
-                                샘플 계정으로 로그인
-                            </button>
-                            <button
-                                type="submit"
-                                className="flex-1 bg-gradient-to-b from-[#5c5b57] to-[#1e2328] hover:from-[#6e6d68] hover:to-[#2d3238] text-[#cdbe91] font-bold py-2.5 px-4 rounded-[2px] shadow-lg transition-all uppercase text-[11px] tracking-wide border border-[#3c3c41] hover:border-[#c8aa6e] active:translate-y-[1px]"
-                            >
-                                로그인
-                            </button>
-                        </div>
-                    </form>
-
-                    <div className="mt-6 space-y-2.5 text-[11px]">
-                        <a href="#" className="block text-[#0ac8b9] hover:underline hover:text-[#4ffceb] transition-colors">아직 계정이 없으신가요? <span className="text-[#0ac8b9]">지금 가입하세요!</span></a>
-                        <a href="#" className="block text-[#005a82] hover:underline hover:text-[#0ac8b9] transition-colors font-medium">계정이름을 잊으셨나요?</a>
-                        <a href="#" className="block text-[#005a82] hover:underline hover:text-[#0ac8b9] transition-colors font-medium">비밀번호를 잊으셨나요?</a>
-                        <a href="#" className="block text-[#005a82] hover:underline hover:text-[#0ac8b9] transition-colors font-medium">문의사항이 있나요?</a>
                     </div>
                 </div>
-            </div>
 
-            {/* Footer Disclaimer */}
-            <div className="absolute bottom-8 w-full text-center px-4 text-[10px] text-[#a09b8c] leading-relaxed opacity-80 z-10">
-                <p>- 롤 내전 도우미는 롤 내전 팀짜기에 대한 서비스를 무료로 제공하며, Riot Games의 공식 서비스가 아닌 2차 창작물임을 밝힙니다.</p>
-                <p>- 현재 모바일 환경은 지원하지 않습니다. PC 크롬 브라우저에서 이용을 권장합니다.</p>
+                {/* Footer Disclaimer */}
+                <div className="mt-12 text-center px-4">
+                    <p className="text-[10px] text-[#5c5b57] leading-relaxed">
+                        롤다방은 Riot Games의 공식 제품이 아니며, Riot Games 또는 League of Legends의 제작 및 관리에 공식적으로 관여하는 사람들의 승인을 받지 않았습니다.
+                    </p>
+                </div>
             </div>
         </div>
     );
 };
+

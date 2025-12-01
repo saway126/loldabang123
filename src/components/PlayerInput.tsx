@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import type { Tier, Division } from '../utils/balancer';
-import { Plus } from 'lucide-react';
+import { Plus, Search, Loader2 } from 'lucide-react';
+import { getPlayerStats } from '../services/riotApi';
 
 interface PlayerInputProps {
     onAddPlayer: (name: string, tagline: string, tier: Tier, division: Division | undefined, position: string) => void;
@@ -16,8 +17,32 @@ export const PlayerInput: React.FC<PlayerInputProps> = ({ onAddPlayer }) => {
     const [tier, setTier] = useState<Tier>('Silver');
     const [division, setDivision] = useState<Division>(4);
     const [position, setPosition] = useState('Fill');
+    const [isLoading, setIsLoading] = useState(false);
 
     const showDivision = !['Unranked', 'Master', 'Grandmaster', 'Challenger'].includes(tier);
+
+    const handleSearch = async () => {
+        if (!name.trim()) {
+            alert('소환사 이름을 입력해주세요.');
+            return;
+        }
+
+        setIsLoading(true);
+        try {
+            const stats = await getPlayerStats(name, tagline);
+            setName(stats.name);
+            setTagline(stats.tagline);
+            setTier(stats.tier);
+            if (stats.division) {
+                setDivision(stats.division as Division);
+            }
+        } catch (error) {
+            console.error(error);
+            alert('플레이어 정보를 가져오는데 실패했습니다. 이름과 태그를 확인해주세요.');
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -48,6 +73,15 @@ export const PlayerInput: React.FC<PlayerInputProps> = ({ onAddPlayer }) => {
                             className="w-20 bg-[#0a1428] text-[#f0e6d2] border border-[#3c3c41] focus:border-[#c8aa6e] px-2 py-2.5 outline-none transition-colors placeholder-[#5c5b57] text-center"
                             placeholder="#KR1"
                         />
+                        <button
+                            type="button"
+                            onClick={handleSearch}
+                            disabled={isLoading}
+                            className="bg-[#1e2328] hover:bg-[#2d3238] text-[#cdbe91] border border-[#3c3c41] hover:border-[#c8aa6e] px-3 rounded flex items-center justify-center transition-all disabled:opacity-50"
+                            title="Riot 정보 불러오기"
+                        >
+                            {isLoading ? <Loader2 size={18} className="animate-spin" /> : <Search size={18} />}
+                        </button>
                     </div>
                 </div>
 
