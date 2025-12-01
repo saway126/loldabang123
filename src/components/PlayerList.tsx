@@ -11,8 +11,8 @@ export const PlayerList: React.FC<PlayerListProps> = ({ players, onRemovePlayer 
     if (players.length === 0) {
         return (
             <div className="text-center text-[#5c5b57] py-12 bg-[#010a13]/80 rounded border border-[#3c3c41] border-dashed">
-                <p className="text-lg font-medium uppercase tracking-wider">No players added yet</p>
-                <p className="text-sm mt-2">Add summoners to start the draft</p>
+                <p className="text-lg font-medium uppercase tracking-wider">등록된 플레이어가 없습니다</p>
+                <p className="text-sm mt-2">소환사를 추가하여 내전을 시작하세요</p>
             </div>
         );
     }
@@ -27,9 +27,9 @@ export const PlayerList: React.FC<PlayerListProps> = ({ players, onRemovePlayer 
             <div className="px-6 py-4 bg-[#0a1428] border-b border-[#c8aa6e]/30 flex justify-between items-center">
                 <h3 className="font-bold text-[#f0e6d2] uppercase tracking-wider flex items-center gap-2">
                     <span className="w-1.5 h-1.5 bg-[#c8aa6e] rotate-45" />
-                    Roster ({players.length})
+                    참가자 ({players.length})
                 </h3>
-                <span className="text-xs text-[#a09b8c] uppercase tracking-wide">Min 10 players for 5v5</span>
+                <span className="text-xs text-[#a09b8c] uppercase tracking-wide">5v5 내전을 위해 최소 10명이 필요합니다</span>
             </div>
             <div className="divide-y divide-[#1e282d] max-h-[400px] overflow-y-auto custom-scrollbar">
                 {players.map((player) => (
