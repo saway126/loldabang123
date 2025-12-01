@@ -71,7 +71,7 @@ function App() {
         <header className="flex justify-between items-start mb-8">
           <div className="text-center flex-1">
             <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-[#c8aa6e] via-[#f0e6d2] to-[#c8aa6e] drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] uppercase" style={{ fontFamily: 'Beaufort, serif' }}>
-              롤 내전 도우미
+              롤다방 내전 악귀 수용소
             </h1>
             <p className="text-[#a09b8c] text-lg font-medium tracking-wide mt-2">kks1234 님 즐거운 내전 되세요 :)</p>
           </div>

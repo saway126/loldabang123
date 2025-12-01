@@ -19,22 +19,22 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-start px-8 md:px-24 lg:px-32 relative overflow-hidden">
+        <div className="min-h-screen flex flex-col items-center justify-center px-4 md:px-0 relative overflow-hidden bg-black">
             {/* Background Overlay */}
-            <div className="absolute inset-0 bg-black/40 z-0" />
+            <div className="absolute inset-0 bg-black/60 z-0" />
 
-            <div className="w-full max-w-[400px] space-y-0 bg-[#1e2328] p-0 rounded-sm border-2 border-[#3c3c41] relative z-10 shadow-2xl">
+            <div className="w-full max-w-[400px] space-y-0 bg-[#1e2328] p-0 rounded-sm border-2 border-[#3c3c41] relative z-10 shadow-2xl mb-12">
                 {/* Header Section */}
                 <div className="text-center pt-10 pb-6 relative overflow-hidden">
                     {/* Golden Glow behind logo */}
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-[#c8aa6e]/20 blur-3xl rounded-full pointer-events-none" />
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-[#c8aa6e]/20 blur-3xl rounded-full pointer-events-none" />
 
-                    <h1 className="relative z-10">
+                    <h1 className="relative z-10 flex flex-col items-center">
                         <span className="block text-4xl font-black text-transparent bg-clip-text bg-gradient-to-b from-[#c8aa6e] via-[#f0e6d2] to-[#c8aa6e] tracking-tighter uppercase drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]" style={{ fontFamily: 'Beaufort, serif' }}>
-                            CIVIL WAR
+                            롤다방
                         </span>
-                        <span className="block text-2xl font-bold text-[#f0e6d2] tracking-[0.2em] uppercase mt-1 drop-shadow-md" style={{ fontFamily: 'Beaufort, serif' }}>
-                            HELPER
+                        <span className="block text-2xl font-bold text-[#f0e6d2] tracking-[0.1em] uppercase mt-1 drop-shadow-md" style={{ fontFamily: 'Beaufort, serif' }}>
+                            내전 악귀 수용소
                         </span>
                     </h1>
                 </div>
@@ -96,7 +96,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
             </div>
 
             {/* Footer Disclaimer */}
-            <div className="absolute bottom-8 left-8 md:left-24 lg:left-32 text-[10px] text-[#a09b8c] max-w-2xl leading-relaxed opacity-80 z-10">
+            <div className="absolute bottom-8 w-full text-center px-4 text-[10px] text-[#a09b8c] leading-relaxed opacity-80 z-10">
                 <p>- 롤 내전 도우미는 롤 내전 팀짜기에 대한 서비스를 무료로 제공하며, Riot Games의 공식 서비스가 아닌 2차 창작물임을 밝힙니다.</p>
                 <p>- 현재 모바일 환경은 지원하지 않습니다. PC 크롬 브라우저에서 이용을 권장합니다.</p>
             </div>
