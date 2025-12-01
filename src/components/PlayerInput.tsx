@@ -23,24 +23,24 @@ export const PlayerInput: React.FC<PlayerInputProps> = ({ onAddPlayer }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-4 bg-gray-800 p-4 rounded-lg shadow-lg items-end">
-            <div className="flex-1 w-full">
-                <label className="block text-sm font-medium text-gray-400 mb-1">Summoner Name</label>
+        <form onSubmit={handleSubmit} className="flex flex-col md:flex-row gap-4 bg-[#010a13]/90 p-6 border border-[#c8aa6e] items-end relative before:absolute before:inset-0 before:border before:border-[#c8aa6e] before:m-1 before:pointer-events-none">
+            <div className="flex-1 w-full relative z-10">
+                <label className="block text-xs font-bold text-[#c8aa6e] mb-2 uppercase tracking-wider">Summoner Name</label>
                 <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full bg-gray-700 text-white border border-gray-600 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
+                    className="w-full bg-[#0a1428] text-[#f0e6d2] border border-[#3c3c41] focus:border-[#c8aa6e] px-4 py-2.5 outline-none transition-colors placeholder-[#5c5b57]"
                     placeholder="Hide on bush"
                 />
             </div>
 
-            <div className="w-full md:w-40">
-                <label className="block text-sm font-medium text-gray-400 mb-1">Tier</label>
+            <div className="w-full md:w-48 relative z-10">
+                <label className="block text-xs font-bold text-[#c8aa6e] mb-2 uppercase tracking-wider">Tier</label>
                 <select
                     value={tier}
                     onChange={(e) => setTier(e.target.value as Tier)}
-                    className="w-full bg-gray-700 text-white border border-gray-600 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
+                    className="w-full bg-[#0a1428] text-[#f0e6d2] border border-[#3c3c41] focus:border-[#c8aa6e] px-4 py-2.5 outline-none transition-colors appearance-none cursor-pointer"
                 >
                     {TIERS.map((t) => (
                         <option key={t} value={t}>{t}</option>
@@ -48,12 +48,12 @@ export const PlayerInput: React.FC<PlayerInputProps> = ({ onAddPlayer }) => {
                 </select>
             </div>
 
-            <div className="w-full md:w-32">
-                <label className="block text-sm font-medium text-gray-400 mb-1">Position</label>
+            <div className="w-full md:w-40 relative z-10">
+                <label className="block text-xs font-bold text-[#c8aa6e] mb-2 uppercase tracking-wider">Position</label>
                 <select
                     value={position}
                     onChange={(e) => setPosition(e.target.value)}
-                    className="w-full bg-gray-700 text-white border border-gray-600 rounded px-3 py-2 focus:outline-none focus:border-blue-500"
+                    className="w-full bg-[#0a1428] text-[#f0e6d2] border border-[#3c3c41] focus:border-[#c8aa6e] px-4 py-2.5 outline-none transition-colors appearance-none cursor-pointer"
                 >
                     {POSITIONS.map((p) => (
                         <option key={p} value={p}>{p}</option>
@@ -63,9 +63,9 @@ export const PlayerInput: React.FC<PlayerInputProps> = ({ onAddPlayer }) => {
 
             <button
                 type="submit"
-                className="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded flex items-center justify-center gap-2 transition-colors"
+                className="w-full md:w-auto bg-[#1e2328] hover:bg-[#1e282d] text-[#cdbe91] border-2 border-[#c8aa6e] font-bold py-2.5 px-8 flex items-center justify-center gap-2 transition-all hover:shadow-[0_0_10px_rgba(200,170,110,0.3)] hover:text-[#f0e6d2] relative z-10 uppercase tracking-wider"
             >
-                <Plus size={20} />
+                <Plus size={18} />
                 Add
             </button>
         </form>

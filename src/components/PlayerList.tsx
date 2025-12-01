@@ -10,33 +10,42 @@ interface PlayerListProps {
 export const PlayerList: React.FC<PlayerListProps> = ({ players, onRemovePlayer }) => {
     if (players.length === 0) {
         return (
-            <div className="text-center text-gray-500 py-8 bg-gray-800/50 rounded-lg border border-gray-700 border-dashed">
-                No players added yet. Add players to start.
+            <div className="text-center text-[#5c5b57] py-12 bg-[#010a13]/80 rounded border border-[#3c3c41] border-dashed">
+                <p className="text-lg font-medium uppercase tracking-wider">No players added yet</p>
+                <p className="text-sm mt-2">Add summoners to start the draft</p>
             </div>
         );
     }
 
     return (
-        <div className="bg-gray-800 rounded-lg shadow-lg overflow-hidden">
-            <div className="px-4 py-3 bg-gray-900 border-b border-gray-700 flex justify-between items-center">
-                <h3 className="font-semibold text-gray-200">Roster ({players.length})</h3>
-                <span className="text-xs text-gray-500">Min 10 players for 5v5</span>
+        <div className="bg-[#010a13]/90 border border-[#c8aa6e] relative group">
+            <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-[#c8aa6e] -translate-x-1 -translate-y-1" />
+            <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-[#c8aa6e] translate-x-1 -translate-y-1" />
+            <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[#c8aa6e] -translate-x-1 translate-y-1" />
+            <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-[#c8aa6e] translate-x-1 translate-y-1" />
+
+            <div className="px-6 py-4 bg-[#0a1428] border-b border-[#c8aa6e]/30 flex justify-between items-center">
+                <h3 className="font-bold text-[#f0e6d2] uppercase tracking-wider flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-[#c8aa6e] rotate-45" />
+                    Roster ({players.length})
+                </h3>
+                <span className="text-xs text-[#a09b8c] uppercase tracking-wide">Min 10 players for 5v5</span>
             </div>
-            <div className="divide-y divide-gray-700 max-h-[400px] overflow-y-auto">
+            <div className="divide-y divide-[#1e282d] max-h-[400px] overflow-y-auto custom-scrollbar">
                 {players.map((player) => (
-                    <div key={player.id} className="flex items-center justify-between px-4 py-3 hover:bg-gray-750 transition-colors">
-                        <div className="flex items-center gap-3">
-                            <div className={`w-2 h-2 rounded-full ${getTierColor(player.tier)}`} />
+                    <div key={player.id} className="flex items-center justify-between px-6 py-4 hover:bg-[#c8aa6e]/5 transition-colors group/item">
+                        <div className="flex items-center gap-4">
+                            <div className={`w-2 h-2 rotate-45 ${getTierColor(player.tier)} shadow-[0_0_8px_currentColor]`} />
                             <div>
-                                <p className="font-medium text-gray-200">{player.name}</p>
-                                <p className="text-xs text-gray-400">{player.tier} • {player.position}</p>
+                                <p className="font-bold text-[#f0e6d2] group-hover/item:text-[#c8aa6e] transition-colors">{player.name}</p>
+                                <p className="text-xs text-[#a09b8c] uppercase tracking-wide">{player.tier} • {player.position}</p>
                             </div>
                         </div>
                         <button
                             onClick={() => onRemovePlayer(player.id)}
-                            className="text-gray-500 hover:text-red-400 transition-colors p-1 rounded hover:bg-gray-700"
+                            className="text-[#5c5b57] hover:text-[#c83c3c] transition-colors p-2 rounded hover:bg-[#c83c3c]/10"
                         >
-                            <Trash2 size={16} />
+                            <Trash2 size={18} />
                         </button>
                     </div>
                 ))}

@@ -43,15 +43,15 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100 p-4 md:p-8">
-      <div className="max-w-4xl mx-auto space-y-8">
+    <div className="min-h-screen text-gray-100 p-4 md:p-8 font-sans">
+      <div className="max-w-6xl mx-auto space-y-8">
 
         {/* Header */}
-        <header className="text-center space-y-2">
-          <h1 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-            LoL Civil War Helper
+        <header className="text-center space-y-4 mb-12">
+          <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-[#c8aa6e] via-[#f0e6d2] to-[#c8aa6e] drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)] uppercase" style={{ fontFamily: 'Beaufort, serif' }}>
+            Civil War Helper
           </h1>
-          <p className="text-gray-400">Fair team balancing for your custom games</p>
+          <p className="text-[#a09b8c] text-lg font-medium tracking-wide uppercase">Fair team balancing for your custom games</p>
         </header>
 
         {/* Controls */}
