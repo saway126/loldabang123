@@ -1,8 +1,9 @@
+
 import { useState } from 'react';
-import { type Player, type Tier, balanceTeams } from './utils/balancer';
+import { type Player, type Tier, type Division, type BalanceMode, balanceTeams } from './utils/balancer';
 import { PlayerInput } from './components/PlayerInput';
 import { PlayerList } from './components/PlayerList';
-import { TeamDisplay } from './components/TeamDisplay';
+
 import { LoginPage } from './components/LoginPage';
 import { Shuffle, Trash2, LogOut } from 'lucide-react';
 
@@ -11,6 +12,7 @@ function App() {
   const [players, setPlayers] = useState<Player[]>([]);
   const [team1, setTeam1] = useState<Player[]>([]);
   const [team2, setTeam2] = useState<Player[]>([]);
+  const [balanceMode, setBalanceMode] = useState<BalanceMode>('Balance');
 
   const handleLogin = () => {
     setIsLoggedIn(true);
@@ -23,11 +25,13 @@ function App() {
     setTeam2([]);
   };
 
-  const handleAddPlayer = (name: string, tier: Tier, position: string) => {
+  const handleAddPlayer = (name: string, tagline: string, tier: Tier, division: Division | undefined, position: string) => {
     const newPlayer: Player = {
       id: crypto.randomUUID(),
       name,
+      tagline,
       tier,
+      division,
       position,
     };
     setPlayers([...players, newPlayer]);
@@ -42,7 +46,7 @@ function App() {
       alert('팀을 나누기 위해서는 최소 2명의 플레이어가 필요합니다.');
       return;
     }
-    const [t1, t2] = balanceTeams(players);
+    const [t1, t2] = balanceTeams(players, balanceMode);
     setTeam1(t1);
     setTeam2(t2);
   };
@@ -80,13 +84,19 @@ function App() {
           </button>
         </header>
 
-        {/* Mode Selection (Mock) */}
+        {/* Mode Selection */}
         <div className="flex justify-center mb-8">
           <div className="relative inline-block text-left w-64">
-            <select className="block w-full bg-[#1e2328] border border-[#c8aa6e] text-[#cdbe91] py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-[#1e282d] focus:border-[#f0e6d2]">
-              <option>모드 선택</option>
-              <option>소환사의 협곡</option>
-              <option>칼바람 나락</option>
+            <label className="block text-xs font-bold text-[#c8aa6e] mb-2 uppercase tracking-wider text-center">모드 선택</label>
+            <select
+              value={balanceMode}
+              onChange={(e) => setBalanceMode(e.target.value as BalanceMode)}
+              className="block w-full bg-[#1e2328] border border-[#c8aa6e] text-[#cdbe91] py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-[#1e282d] focus:border-[#f0e6d2] text-center font-bold"
+            >
+              <option value="Random">Random</option>
+              <option value="Balance">Balance</option>
+              <option value="Golden Balance">Golden Balance</option>
+              <option value="Line Balance">Line Balance</option>
             </select>
           </div>
         </div>
@@ -101,8 +111,10 @@ function App() {
                 <div className="w-full space-y-2">
                   {team1.map(p => (
                     <div key={p.id} className="flex justify-between items-center bg-[#1e2328] p-2 rounded border border-[#3c3c41]">
-                      <span className="text-[#f0e6d2] font-bold">{p.name}</span>
-                      <span className="text-[#a09b8c] text-sm">{p.tier}</span>
+                      <div className="flex flex-col">
+                        <span className="text-[#f0e6d2] font-bold">{p.name} <span className="text-[#5c5b57] text-xs">#{p.tagline}</span></span>
+                      </div>
+                      <span className="text-[#a09b8c] text-sm font-mono">{p.tier} {p.division}</span>
                     </div>
                   ))}
                 </div>
@@ -120,8 +132,10 @@ function App() {
                 <div className="w-full space-y-2">
                   {team2.map(p => (
                     <div key={p.id} className="flex justify-between items-center bg-[#1e2328] p-2 rounded border border-[#3c3c41]">
-                      <span className="text-[#f0e6d2] font-bold">{p.name}</span>
-                      <span className="text-[#a09b8c] text-sm">{p.tier}</span>
+                      <div className="flex flex-col">
+                        <span className="text-[#f0e6d2] font-bold">{p.name} <span className="text-[#5c5b57] text-xs">#{p.tagline}</span></span>
+                      </div>
+                      <span className="text-[#a09b8c] text-sm font-mono">{p.tier} {p.division}</span>
                     </div>
                   ))}
                 </div>

@@ -37,8 +37,10 @@ export const PlayerList: React.FC<PlayerListProps> = ({ players, onRemovePlayer 
                         <div className="flex items-center gap-4">
                             <div className={`w-2 h-2 rotate-45 ${getTierColor(player.tier)} shadow-[0_0_8px_currentColor]`} />
                             <div>
-                                <p className="font-bold text-[#f0e6d2] group-hover/item:text-[#c8aa6e] transition-colors">{player.name}</p>
-                                <p className="text-xs text-[#a09b8c] uppercase tracking-wide">{player.tier} • {player.position}</p>
+                                <p className="font-bold text-[#f0e6d2] group-hover/item:text-[#c8aa6e] transition-colors">
+                                    {player.name} <span className="text-[#5c5b57] text-xs">#{player.tagline}</span>
+                                </p>
+                                <p className="text-xs text-[#a09b8c] uppercase tracking-wide">{player.tier} {player.division} • {player.position}</p>
                             </div>
                         </div>
                         <button
