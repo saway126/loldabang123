@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
 
 interface ModalProps {
@@ -13,29 +14,67 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }
         const handleEsc = (e: KeyboardEvent) => {
             if (e.key === 'Escape') onClose();
         };
-        window.addEventListener('keydown', handleEsc);
-        return () => window.removeEventListener('keydown', handleEsc);
-    }, [onClose]);
+        if (isOpen) {
+            window.addEventListener('keydown', handleEsc);
+            document.body.style.overflow = 'hidden';
+        }
+        return () => {
+            window.removeEventListener('keydown', handleEsc);
+            document.body.style.overflow = 'unset';
+        };
+    }, [isOpen, onClose]);
 
     if (!isOpen) return null;
 
-    return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
-            <div className="relative w-full max-w-2xl bg-[#010a13] border border-[#c8aa6e] shadow-2xl animate-in fade-in zoom-in duration-200">
+    return createPortal(
+        <div 
+            style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                width: '100vw',
+                height: '100vh',
+                zIndex: 9999,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '1rem'
+            }}
+        >
+            {/* Background Overlay */}
+            <div 
+                style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    backdropFilter: 'blur(4px)'
+                }}
+                onClick={onClose} 
+            />
+            
+            {/* Modal Content */}
+            <div className="relative w-full max-w-xl bg-[#010a13] border border-[#c8aa6e] shadow-[0_0_50px_rgba(0,0,0,0.8)] flex flex-col max-h-[90vh]">
                 {/* Header */}
-                <div className="flex items-center justify-between p-4 border-b border-[#1e2328] bg-[#0a1428]">
-                    <h2 className="text-[#f0e6d2] font-bold text-lg uppercase tracking-wider">{title}</h2>
-                    <button onClick={onClose} className="text-[#5c5b57] hover:text-[#c8aa6e] transition-colors">
+                <div className="flex items-center justify-between p-5 border-b border-[#c8aa6e]/30 bg-[#0a1428]">
+                    <h2 className="text-[#c8aa6e] font-bold text-lg uppercase tracking-widest drop-shadow-sm">{title}</h2>
+                    <button 
+                        onClick={onClose} 
+                        className="text-[#5c5b57] hover:text-[#c8aa6e] transition-colors p-1"
+                        aria-label="Close modal"
+                    >
                         <X size={24} />
                     </button>
                 </div>
 
                 {/* Content */}
-                <div className="p-6">
+                <div className="p-6 overflow-y-auto custom-scrollbar bg-[#010a13]">
                     {children}
                 </div>
             </div>
-        </div>
+        </div>,
+        document.body
     );
 };

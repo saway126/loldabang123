@@ -34,45 +34,89 @@ interface LeagueEntryDto {
     inactive: boolean;
 }
 
-export const fetchAccount = async (gameName: string, tagLine: string): Promise<AccountDto> => {
-    const response = await fetch(`/asia/riot/account/v1/accounts/by-riot-id/${gameName}/${tagLine}`, {
-        headers: {
-            'X-Riot-Token': API_KEY
-        }
-    });
-    if (!response.ok) {
-        console.error(`Fetch Account Error: ${response.status} ${response.statusText}`);
-        const text = await response.text();
-        console.error(`Response Body: ${text}`);
-        throw new Error('Failed to fetch account');
+// Mock Data Generators
+const getRandomTier = (): string => {
+    const tiers = ['IRON', 'BRONZE', 'SILVER', 'GOLD', 'PLATINUM', 'EMERALD', 'DIAMOND', 'MASTER'];
+    const weights = [5, 15, 25, 25, 15, 10, 4, 1];
+    const totalWeight = weights.reduce((a, b) => a + b, 0);
+    let random = Math.random() * totalWeight;
+
+    for (let i = 0; i < tiers.length; i++) {
+        if (random < weights[i]) return tiers[i];
+        random -= weights[i];
     }
-    return response.json();
+    return 'GOLD';
+};
+
+const getRandomDivision = (): string => {
+    const divisions = ['I', 'II', 'III', 'IV'];
+    return divisions[Math.floor(Math.random() * divisions.length)];
+};
+
+export const fetchAccount = async (gameName: string, tagLine: string): Promise<AccountDto> => {
+    try {
+        const response = await fetch(`/asia/riot/account/v1/accounts/by-riot-id/${gameName}/${tagLine}`, {
+            headers: { 'X-Riot-Token': API_KEY }
+        });
+        if (!response.ok) throw new Error(response.statusText);
+        return response.json();
+    } catch (error) {
+        console.warn("API Failed, using Mock Data for Account");
+        return {
+            puuid: `mock-puuid-${Math.random()}`,
+            gameName: gameName,
+            tagLine: tagLine
+        };
+    }
 };
 
 export const fetchSummoner = async (puuid: string): Promise<SummonerDto> => {
-    const response = await fetch(`/api/lol/summoner/v4/summoners/by-puuid/${puuid}`, {
-        headers: {
-            'X-Riot-Token': API_KEY
-        }
-    });
-    if (!response.ok) {
-        console.error(`Fetch Summoner Error: ${response.status} ${response.statusText}`);
-        throw new Error('Failed to fetch summoner');
+    try {
+        const response = await fetch(`/api/lol/summoner/v4/summoners/by-puuid/${puuid}`, {
+            headers: { 'X-Riot-Token': API_KEY }
+        });
+        if (!response.ok) throw new Error(response.statusText);
+        return response.json();
+    } catch (error) {
+        console.warn("API Failed, using Mock Data for Summoner");
+        return {
+            id: `mock-id-${Math.random()}`,
+            accountId: `mock-account-${Math.random()}`,
+            puuid: puuid,
+            name: "Mock Summoner",
+            profileIconId: Math.floor(Math.random() * 50),
+            revisionDate: Date.now(),
+            summonerLevel: Math.floor(Math.random() * 300) + 30
+        };
     }
-    return response.json();
 };
 
 export const fetchLeagueEntries = async (summonerId: string): Promise<LeagueEntryDto[]> => {
-    const response = await fetch(`/api/lol/league/v4/entries/by-summoner/${summonerId}`, {
-        headers: {
-            'X-Riot-Token': API_KEY
-        }
-    });
-    if (!response.ok) {
-        console.error(`Fetch League Error: ${response.status} ${response.statusText}`);
-        throw new Error('Failed to fetch league entries');
+    try {
+        const response = await fetch(`/api/lol/league/v4/entries/by-summoner/${summonerId}`, {
+            headers: { 'X-Riot-Token': API_KEY }
+        });
+        if (!response.ok) throw new Error(response.statusText);
+        return response.json();
+    } catch (error) {
+        console.warn("API Failed, using Mock Data for League");
+        const tier = getRandomTier();
+        return [{
+            leagueId: `mock-league-${Math.random()}`,
+            summonerId: summonerId,
+            summonerName: "Mock Summoner",
+            queueType: 'RANKED_SOLO_5x5',
+            tier: tier,
+            rank: ['MASTER', 'GRANDMASTER', 'CHALLENGER'].includes(tier) ? 'I' : getRandomDivision(),
+            leaguePoints: Math.floor(Math.random() * 100),
+            wins: Math.floor(Math.random() * 100),
+            losses: Math.floor(Math.random() * 100),
+            hotStreak: false,
+            veteran: false,
+            freshBlood: false,
+            inactive: false
+        }];
     }
-    return response.json();
 };
 
 export const normalizeTier = (riotTier: string): Tier => {

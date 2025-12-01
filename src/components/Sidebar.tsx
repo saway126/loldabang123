@@ -1,14 +1,15 @@
 import React from 'react';
-import type { Player } from '../utils/balancer';
-import { X, UserPlus, HelpCircle, AlertCircle } from 'lucide-react';
+import type { Player, Tier } from '../utils/balancer';
+import { X, UserPlus, HelpCircle, AlertCircle, Users } from 'lucide-react';
 
 interface SidebarProps {
     players: Player[];
     onRemovePlayer: (id: string) => void;
     onOpenAddModal: () => void;
+    onAutoFill: () => void;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ players, onRemovePlayer, onOpenAddModal }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ players, onRemovePlayer, onOpenAddModal, onAutoFill }) => {
     return (
         <div className="w-[300px] bg-[#010a13] border-l border-[#3c3c41] flex flex-col h-full absolute right-0 top-0 z-20 shadow-2xl">
             {/* User Profile Section (Mock) */}
@@ -33,9 +34,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ players, onRemovePlayer, onOpe
                     <UserPlus size={14} />
                     인원 추가
                 </button>
-                <button className="bg-[#1e2328] hover:bg-[#2d3238] text-[#a09b8c] border border-[#3c3c41] hover:border-[#c8aa6e] py-2 px-3 rounded flex items-center justify-center gap-2 text-xs font-bold transition-all">
-                    <HelpCircle size={14} />
-                    사용법 보기
+                <button
+                    onClick={onAutoFill}
+                    className="bg-[#1e2328] hover:bg-[#2d3238] text-[#a09b8c] border border-[#3c3c41] hover:border-[#c8aa6e] py-2 px-3 rounded flex items-center justify-center gap-2 text-xs font-bold transition-all"
+                >
+                    <Users size={14} />
+                    10명 채우기
                 </button>
             </div>
 
@@ -84,7 +88,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ players, onRemovePlayer, onOpe
     );
 };
 
-const getTierColor = (tier: string) => {
+const getTierColor = (tier: Tier) => {
     switch (tier) {
         case 'Iron': return 'from-gray-600 to-gray-800';
         case 'Bronze': return 'from-amber-700 to-amber-900';
