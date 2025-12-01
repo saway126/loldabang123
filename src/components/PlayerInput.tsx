@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Tier } from '../utils/balancer';
+import type { Tier } from '../utils/balancer';
 import { Plus } from 'lucide-react';
 
 interface PlayerInputProps {
