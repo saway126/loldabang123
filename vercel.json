@@ -1,8 +1,10 @@
 {
+  "framework": "vite",
+  "installCommand": "npm install",
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
   "rewrites": [
     { "source": "/asia/(.*)", "destination": "/api/asia/$1" },
     { "source": "/api/(.*)",  "destination": "/api/kr/$1" }
   ]
 }
-
-

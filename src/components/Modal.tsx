@@ -56,7 +56,10 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }
             />
             
             {/* Modal Content */}
-            <div className="relative w-full max-w-xl bg-[#010a13] border border-[#c8aa6e] shadow-[0_0_50px_rgba(0,0,0,0.8)] flex flex-col max-h-[90vh]">
+            <div
+                className="relative bg-[#010a13] border border-[#c8aa6e] shadow-[0_0_50px_rgba(0,0,0,0.8)] flex flex-col max-h-[90vh]"
+                style={{ width: 'min(95vw, 600px)' }}
+            >
                 {/* Header */}
                 <div className="flex items-center justify-between p-5 border-b border-[#c8aa6e]/30 bg-[#0a1428]">
                     <h2 className="text-[#c8aa6e] font-bold text-lg uppercase tracking-widest drop-shadow-sm">{title}</h2>

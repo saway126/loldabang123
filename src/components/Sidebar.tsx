@@ -1,6 +1,6 @@
 import React from 'react';
 import type { Player, Tier } from '../utils/balancer';
-import { X, UserPlus, HelpCircle, AlertCircle, Users } from 'lucide-react';
+import { X, UserPlus, AlertCircle, Users } from 'lucide-react';
 
 interface SidebarProps {
     players: Player[];
@@ -11,21 +11,8 @@ interface SidebarProps {
 
 export const Sidebar: React.FC<SidebarProps> = ({ players, onRemovePlayer, onOpenAddModal, onAutoFill }) => {
     return (
-        <div className="w-[300px] bg-[#010a13] border-l border-[#3c3c41] flex flex-col h-full absolute right-0 top-0 z-20 shadow-2xl">
-            {/* User Profile Section (Mock) */}
-            <div className="p-6 border-b border-[#1e2328] flex flex-col items-center text-center">
-                <div className="w-16 h-16 rounded-full bg-[#1e2328] border-2 border-[#c8aa6e] mb-3 relative overflow-hidden">
-                    <img src="https://ddragon.leagueoflegends.com/cdn/14.23.1/img/profileicon/29.png" alt="Profile" className="w-full h-full object-cover" />
-                </div>
-                <h3 className="text-[#f0e6d2] font-bold text-sm">kks1234</h3>
-                <p className="text-[#a09b8c] text-xs mt-1">즐거운 내전 되세요 :)</p>
-
-                <button className="mt-4 px-4 py-1.5 border border-[#5c5b57] rounded text-[11px] text-[#a09b8c] hover:text-[#f0e6d2] hover:border-[#c8aa6e] transition-colors uppercase tracking-wider">
-                    로그아웃
-                </button>
-            </div>
-
-            {/* Action Buttons */}
+        <div className="w-[240px] bg-[#010a13] border-l border-[#3c3c41] flex flex-col h-full min-h-screen flex-shrink-0 shadow-2xl">
+            {/* Quick Actions */}
             <div className="p-4 grid grid-cols-2 gap-2 border-b border-[#1e2328]">
                 <button
                     onClick={onOpenAddModal}
@@ -64,6 +51,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ players, onRemovePlayer, onOpe
                                 <div className="flex flex-col">
                                     <span className="text-[#f0e6d2] text-xs font-bold truncate max-w-[120px]">{player.name}</span>
                                     <span className="text-[#5c5b57] text-[10px] uppercase tracking-wider">{player.tier} {player.division}</span>
+                                    <span className="text-[#a09b8c] text-[10px] truncate max-w-[120px]">
+                                        {getPositionLabel(player)}
+                                    </span>
                                 </div>
                             </div>
 
@@ -76,13 +66,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ players, onRemovePlayer, onOpe
                         </div>
                     ))
                 )}
-            </div>
-
-            {/* Footer Actions */}
-            <div className="p-4 border-t border-[#1e2328] grid grid-cols-3 gap-2">
-                <button className="col-span-1 bg-[#1e2328] text-[#5c5b57] text-[10px] py-2 border border-[#3c3c41] hover:text-[#cdbe91] hover:border-[#c8aa6e] transition-colors rounded">문의 등록</button>
-                <button className="col-span-1 bg-[#1e2328] text-[#5c5b57] text-[10px] py-2 border border-[#3c3c41] hover:text-[#cdbe91] hover:border-[#c8aa6e] transition-colors rounded">회원 탈퇴</button>
-                <button className="col-span-1 bg-[#1e2328] text-[#5c5b57] text-[10px] py-2 border border-[#3c3c41] hover:text-[#cdbe91] hover:border-[#c8aa6e] transition-colors rounded">공지 사항</button>
             </div>
         </div>
     );
@@ -102,4 +85,10 @@ const getTierColor = (tier: Tier) => {
         case 'Challenger': return 'from-yellow-200 to-blue-400';
         default: return 'from-gray-800 to-black';
     }
+};
+
+const getPositionLabel = (player: { primaryPosition?: string; secondaryPosition?: string; position?: string; }) => {
+    const primary = player.primaryPosition || player.position || 'Fill';
+    const secondary = player.secondaryPosition && player.secondaryPosition !== primary ? ` / ${player.secondaryPosition}` : '';
+    return `${primary}${secondary}`;
 };

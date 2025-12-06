@@ -1,3 +1,23 @@
+# loldabang
+
+## Riot API 키 설정 및 배포
+1. 새로운 개발 키를 발급받는다. (Riot 개발자 포털)
+2. PowerShell에서 helper 스크립트 실행:
+   ```
+   powershell -ExecutionPolicy Bypass -File scripts/update-riot-key.ps1
+   ```
+   - 프롬프트에 새 `RIOT_API_KEY` 입력
+   - 자동으로 Vercel env `RIOT_API_KEY`(production) 추가 후 `vercel deploy` 실행
+   - vercel CLI 로그인/프로젝트 링크가 되어 있어야 함
+3. 로컬 .env에 반영하고 싶다면 `vercel env pull .env.local`을 추가 실행
+
+## 로컬 폰트 (Beaufort)
+원격 CORS 문제를 피하기 위해 Beaufort 폰트를 로컬 경로로 참조하도록 수정했습니다.
+
+- 폰트 경로: `public/fonts/beaufortforlol-bold.woff2`, `public/fonts/beaufortforlol-regular.woff2`
+- `src/index.css`에서 `@font-face`가 이 경로를 사용합니다.
+- 실제 폰트 파일은 레포에 포함되어 있지 않으므로, 위 파일명을 맞춰 `public/fonts/`에 배치하세요.
+- 파일이 없을 경우 자동으로 인터(Inter)/시스템 폰트로 폴백됩니다.
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

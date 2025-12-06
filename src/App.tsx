@@ -1,31 +1,35 @@
 import { useState } from 'react';
-import { type Player, type Tier, type Division, type BalanceMode, balanceTeams } from './utils/balancer';
+import { type Player, type Tier, type Division, type BalanceMode } from './utils/balancer';
 import { PlayerInput } from './components/PlayerInput';
 import { Sidebar } from './components/Sidebar';
 import { Modal } from './components/Modal';
-import { LoginPage } from './components/LoginPage';
 import { Shuffle, Trash2, Snowflake } from 'lucide-react';
+import { serverClient } from './services/serverClient';
 
 function App() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [players, setPlayers] = useState<Player[]>([]);
     const [team1, setTeam1] = useState<Player[]>([]);
     const [team2, setTeam2] = useState<Player[]>([]);
     const [balanceMode, setBalanceMode] = useState<BalanceMode>('Balance');
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
-    const handleLogin = () => {
-        setIsLoggedIn(true);
-    };
-
-    const handleAddPlayer = (name: string, tagline: string, tier: Tier, division: Division | undefined, position: string) => {
+    const handleAddPlayer = (
+        name: string,
+        tagline: string,
+        tier: Tier,
+        division: Division | undefined,
+        primaryPosition: string,
+        secondaryPosition?: string
+    ) => {
         const newPlayer: Player = {
             id: crypto.randomUUID(),
             name,
             tagline,
             tier,
             division,
-            position,
+            position: primaryPosition || 'Fill',
+            primaryPosition: primaryPosition || 'Fill',
+            secondaryPosition: secondaryPosition || 'Fill',
         };
         setPlayers(prev => [...prev, newPlayer]);
     };
@@ -40,7 +44,9 @@ function App() {
             tagline: 'KR1',
             tier: tiers[Math.floor(Math.random() * tiers.length)],
             division: Math.floor(Math.random() * 4 + 1) as Division,
-            position: positions[i % 5], // Distribute positions evenly
+            position: positions[i % 5],
+            primaryPosition: positions[i % 5],
+            secondaryPosition: positions[(i + 1) % 5],
         }));
 
         setPlayers(prev => [...prev, ...newPlayers]);
@@ -50,14 +56,19 @@ function App() {
         setPlayers(players.filter(p => p.id !== id));
     };
 
-    const handleBalance = () => {
+    const handleBalance = async () => {
         if (players.length < 2) {
             alert('팀을 나누기 위해서는 최소 2명의 플레이어가 필요합니다.');
             return;
         }
-        const [t1, t2] = balanceTeams(players, balanceMode);
-        setTeam1(t1);
-        setTeam2(t2);
+        try {
+            const { team1, team2 } = await serverClient.makeTeams(players, balanceMode);
+            setTeam1(team1);
+            setTeam2(team2);
+        } catch (error) {
+            console.error("Balance failed", error);
+            alert("팀 배정 중 오류가 발생했습니다.");
+        }
     };
 
     const handleClear = () => {
@@ -67,10 +78,6 @@ function App() {
             setTeam2([]);
         }
     };
-
-    if (!isLoggedIn) {
-        return <LoginPage onLogin={handleLogin} />;
-    }
 
     return (
         <div className="min-h-screen text-gray-100 font-sans flex overflow-hidden bg-[#091428]">
@@ -84,7 +91,7 @@ function App() {
             <div className="absolute inset-0 z-0 pointer-events-none bg-[url('https://raw.githubusercontent.com/tsparticles/website/main/public/images/snow.png')] animate-pulse opacity-20" />
 
             {/* Main Content Area */}
-            <div className="flex-1 mr-[300px] h-screen overflow-y-auto custom-scrollbar p-8 relative z-10">
+            <div className="flex-1 h-screen overflow-y-auto custom-scrollbar p-8 relative z-10">
 
                 <div className="max-w-6xl mx-auto space-y-8">
                     {/* Header */}
@@ -147,8 +154,8 @@ function App() {
                                                         <span className="text-[#e0f3ff] font-bold text-sm">{p.name}</span>
                                                         <span className="text-[#5c5b57] text-xs font-mono uppercase">{p.tier} {p.division}</span>
                                                     </div>
-                                                    <div className="absolute right-4 text-[#0ac8b9] text-xs font-bold opacity-70">
-                                                        {p.position}
+                                                    <div className="absolute right-4 text-[#0ac8b9] text-xs font-bold opacity-70 text-right">
+                                                        {getPositionLabel(p)}
                                                     </div>
                                                 </>
                                             ) : (
@@ -180,8 +187,8 @@ function App() {
                                                         <span className="text-[#e0f3ff] font-bold text-sm">{p.name}</span>
                                                         <span className="text-[#5c5b57] text-xs font-mono uppercase">{p.tier} {p.division}</span>
                                                     </div>
-                                                    <div className="absolute right-4 text-[#c83c3c] text-xs font-bold opacity-70">
-                                                        {p.position}
+                                                    <div className="absolute right-4 text-[#c83c3c] text-xs font-bold opacity-70 text-right">
+                                                        {getPositionLabel(p)}
                                                     </div>
                                                 </>
                                             ) : (
@@ -229,6 +236,12 @@ function App() {
             </Modal>
         </div>
     );
+}
+
+function getPositionLabel(p: Player) {
+    const primary = p.primaryPosition || p.position || 'Fill';
+    const secondary = p.secondaryPosition && p.secondaryPosition !== primary ? ` / ${p.secondaryPosition}` : '';
+    return `${primary}${secondary}`;
 }
 
 export default App;

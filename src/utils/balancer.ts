@@ -7,7 +7,9 @@ export interface Player {
     tagline?: string;
     tier: Tier;
     division?: Division; // Only for Iron ~ Diamond
-    position: string; // 'Top', 'Jungle', 'Mid', 'ADC', 'Support', 'Fill'
+    position: string; // legacy primary position
+    primaryPosition?: string;  // 'Top', 'Jungle', 'Mid', 'ADC', 'Support', 'Fill'
+    secondaryPosition?: string; // optional second choice
 }
 
 export type BalanceMode = 'Random' | 'Balance' | 'Golden Balance' | 'Line Balance';
