@@ -80,7 +80,7 @@ function App() {
     };
 
     return (
-        <div className="min-h-screen text-gray-100 font-sans flex overflow-hidden bg-[#091428]">
+        <div className="min-h-screen text-gray-100 font-sans flex flex-col lg:flex-row bg-[#091428] overflow-x-hidden">
             {/* Background Image - Freljord Theme */}
             <div
                 className="absolute inset-0 z-0 opacity-40 bg-cover bg-center"
@@ -91,13 +91,13 @@ function App() {
             <div className="absolute inset-0 z-0 pointer-events-none bg-[url('https://raw.githubusercontent.com/tsparticles/website/main/public/images/snow.png')] animate-pulse opacity-20" />
 
             {/* Main Content Area */}
-            <div className="flex-1 h-screen overflow-y-auto custom-scrollbar p-8 relative z-10">
+            <div className="flex-1 lg:h-screen overflow-y-auto custom-scrollbar p-4 lg:p-8 relative z-10 w-full">
 
                 <div className="max-w-6xl mx-auto space-y-8">
                     {/* Header */}
-                    <header className="flex justify-between items-end border-b border-[#0ac8b9]/30 pb-6">
+                    <header className="flex flex-col lg:flex-row justify-between items-start lg:items-end border-b border-[#0ac8b9]/30 pb-6 gap-4">
                         <div>
-                            <h1 className="text-4xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-[#0ac8b9] via-[#e0f3ff] to-[#0ac8b9] drop-shadow-[0_0_10px_rgba(10,200,185,0.5)] uppercase flex items-center gap-3" style={{ fontFamily: 'Beaufort, serif' }}>
+                            <h1 className="text-2xl lg:text-4xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-[#0ac8b9] via-[#e0f3ff] to-[#0ac8b9] drop-shadow-[0_0_10px_rgba(10,200,185,0.5)] uppercase flex items-center gap-2 lg:gap-3" style={{ fontFamily: 'Beaufort, serif' }}>
                                 <Snowflake className="text-[#0ac8b9] animate-spin-slow" size={32} />
                                 롤다방 내전 악귀 수용소
                                 <Snowflake className="text-[#0ac8b9] animate-spin-slow" size={32} />
@@ -133,7 +133,7 @@ function App() {
                     </header>
 
                     {/* Teams Display */}
-                    <div className="grid grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         {/* Team 1 */}
                         <div className="space-y-4">
                             <div className="flex items-center justify-between border-b-2 border-[#0ac8b9] pb-2">

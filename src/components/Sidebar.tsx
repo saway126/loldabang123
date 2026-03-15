@@ -11,7 +11,7 @@ interface SidebarProps {
 
 export const Sidebar: React.FC<SidebarProps> = ({ players, onRemovePlayer, onOpenAddModal, onAutoFill }) => {
     return (
-        <div className="w-[240px] bg-[#010a13] border-l border-[#3c3c41] flex flex-col h-full min-h-screen flex-shrink-0 shadow-2xl">
+        <div className="w-full lg:w-[240px] bg-[#010a13] border-t lg:border-t-0 lg:border-l border-[#3c3c41] flex flex-col h-[400px] lg:h-full lg:min-h-screen flex-shrink-0 lg:shadow-2xl z-20">
             {/* Quick Actions */}
             <div className="p-4 grid grid-cols-2 gap-2 border-b border-[#1e2328]">
                 <button

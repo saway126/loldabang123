@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /c/loldabang/android -name \"build.gradle\" | xargs grep -l \"sourceCompatibility\\\\|JavaVersion\" 2>/dev/null)",
+      "Bash(find /c/loldabang/node_modules/@capacitor/android -name \"build.gradle\" 2>/dev/null | head -5 | xargs grep -l \"sourceCompatibility\" 2>/dev/null)",
+      "Bash(winget list:*)",
+      "Bash(\"/c/Program Files/Android/Android Studio/jbr/bin/java\" -version 2>&1)",
+      "Bash(npm run:*)",
+      "Bash(npx cap:*)",
+      "Bash(cd /c/loldabang/android && ./gradlew assembleDebug --console=plain 2>&1 | tail -20)",
+      "Bash(./gradlew assembleDebug --console=plain 2>&1 | tail -20)",
+      "Bash(\"/c/Users/kks/AppData/Local/Android/Sdk/emulator/emulator\" -list-avds 2>/dev/null || echo \"emulator not found\")",
+      "Bash(\"/c/Users/kks/AppData/Local/Android/Sdk/platform-tools/adb.exe\" install:*)",
+      "Bash(\"/c/Users/kks/AppData/Local/Android/Sdk/platform-tools/adb.exe\" shell:*)"
+    ]
+  }
+}
